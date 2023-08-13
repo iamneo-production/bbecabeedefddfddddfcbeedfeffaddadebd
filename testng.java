@@ -2,56 +2,42 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
-import java.util.List;
+public class LinkTest {
 
-public class FlipkartLinkTest {
+    private WebDriver driver;
 
-    WebDriver driver;
-
-    @BeforeClass
+    @BeforeMethod
     public void setUp() {
-        // Set the system property for the ChromeDriver (provide the path to your ChromeDriver executable)
+        // Set the path to the Chrome driver executable
         System.setProperty("webdriver.chrome.driver", "path_to_chromedriver.exe");
 
-        // Initialize Chrome browser
+        // Initialize the Chrome driver
         driver = new ChromeDriver();
-
-        // Maximize the browser window
         driver.manage().window().maximize();
     }
 
     @Test
-    public void countLinksOnHomepage() {
-        // Navigate to Flipkart homepage
-        driver.get("https://www.flipkart.com/");
+    public void testCountAndPrintLinks() {
+        // Navigate to "https://flipkart.com"
+        driver.get("https://flipkart.com");
 
         // Find all the links on the page
-        List<WebElement> allLinks = driver.findElements(By.tagName("a"));
+        java.util.List<WebElement> links = driver.findElements(By.tagName("a"));
 
-        // Print the count of links
-        System.out.println("Number of links on the homepage: " + allLinks.size());
-    }
-
-    @Test
-    public void printLinkTextAndURLs() {
-        // Navigate to Flipkart homepage
-        driver.get("https://www.flipkart.com/");
-
-        // Find all the links on the page
-        List<WebElement> allLinks = driver.findElements(By.tagName("a"));
+        // Print the number of links on the page
+        System.out.println("Number of links on the page: " + links.size());
 
         // Print link text and URLs
-        for (WebElement link : allLinks) {
+        for (WebElement link : links) {
             System.out.println("Link Text: " + link.getText());
-            System.out.println("URL: " + link.getAttribute("href"));
+            System.out.println("Link URL: " + link.getAttribute("href"));
+            System.out.println("-------------------------");
         }
     }
 
-    @AfterClass
+    @AfterMethod
     public void tearDown() {
         // Close the browser
         driver.quit();
